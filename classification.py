@@ -119,7 +119,6 @@ def load_file(path, mode, is_attack = 1, label = 1, folder_name='Bi/', sliceno =
             start = sliceno * temp
             end = start + temp - 1 
             x = x[start:end,:] 
-            print('Start, {}, End, {} \n'.format(start, end))
             with open(folder_name + 'instances_count.csv','a') as f:
                 f.write('Start, {}, End, {} \n'.format(start, end))
     elif mode == 0:
@@ -170,16 +169,21 @@ def classify_sub(classifier, x_train, y_train, x_test, y_test, cm_file_name, sum
     del cm
     
 def classify(random_state, x_train, y_train, x_test, y_test, folder_name, prefix = "", verbose = True):
-    confusion_matrix_folder = folder_name + 'Confusion_Matrix' + prefix
-    summary_folder = folder_name + 'Summary' + prefix
+    confusion_matrix_folder = os.path.join(folder_name, 'Confusion_Matrix/') 
+    summary_folder =  os.path.join(folder_name, 'Summary/') 
 
+    if os.path.isdir(confusion_matrix_folder) == False:
+            os.mkdir(confusion_matrix_folder)
+    if os.path.isdir(summary_folder) == False:
+            os.mkdir(summary_folder)
+            
     # 1- Linear
     linear_classifier = LogisticRegression(random_state = random_state)
     classify_sub(linear_classifier, 
                  x_train, y_train, 
                  x_test, y_test, 
-                 confusion_matrix_folder + 'cm_linear.csv', 
-                 summary_folder + 'summary_linear.csv',
+                 confusion_matrix_folder + prefix + '_cm_linear.csv', 
+                 summary_folder + prefix + '_summary_linear.csv',
                  'Linear',
                  verbose)
        
@@ -188,8 +192,8 @@ def classify(random_state, x_train, y_train, x_test, y_test, folder_name, prefix
     classify_sub(knn_classifier, 
                  x_train, y_train, 
                  x_test, y_test, 
-                 confusion_matrix_folder + 'cm_knn.csv', 
-                 summary_folder + 'summary_knn.csv',
+                 confusion_matrix_folder + prefix + '_cm_knn.csv', 
+                 summary_folder + prefix + '_summary_knn.csv',
                  'KNN',
                  verbose)
     
@@ -198,8 +202,8 @@ def classify(random_state, x_train, y_train, x_test, y_test, folder_name, prefix
     classify_sub(kernel_svm_classifier, 
                  x_train, y_train, 
                  x_test, y_test, 
-                 confusion_matrix_folder + 'cm_kernel_svm.csv', 
-                 summary_folder + 'summary_kernel_svm.csv',
+                 confusion_matrix_folder + prefix + '_cm_kernel_svm.csv', 
+                 summary_folder + prefix + '_summary_kernel_svm.csv',
                  'SVM',
                  verbose)
     
@@ -208,8 +212,8 @@ def classify(random_state, x_train, y_train, x_test, y_test, folder_name, prefix
     classify_sub(naive_classifier, 
                  x_train, y_train, 
                  x_test, y_test, 
-                 confusion_matrix_folder + 'cm_naive.csv', 
-                 summary_folder + 'summary_naive.csv',
+                 confusion_matrix_folder + prefix + '_cm_naive.csv', 
+                 summary_folder + prefix + '_summary_naive.csv',
                  'Naive',
                  verbose)
 
@@ -218,8 +222,8 @@ def classify(random_state, x_train, y_train, x_test, y_test, folder_name, prefix
     classify_sub(decision_tree_classifier, 
                  x_train, y_train, 
                  x_test, y_test, 
-                 confusion_matrix_folder + 'cm_decision_tree.csv', 
-                 summary_folder + 'summary_decision_tree.csv',
+                 confusion_matrix_folder + prefix + '_cm_decision_tree.csv', 
+                 summary_folder + prefix + '_summary_decision_tree.csv',
                  'Decision Tree',
                  verbose)
     
@@ -228,8 +232,8 @@ def classify(random_state, x_train, y_train, x_test, y_test, folder_name, prefix
     classify_sub(random_forest_classifier, 
                  x_train, y_train, 
                  x_test, y_test, 
-                 confusion_matrix_folder + 'cm_random_forest.csv', 
-                 summary_folder + 'summary_random_forest.csv',
+                 confusion_matrix_folder + prefix + '_cm_random_forest.csv', 
+                 summary_folder + prefix + '_summary_random_forest.csv',
                  'Random Forest',
                  verbose)
 
@@ -238,8 +242,8 @@ def classify(random_state, x_train, y_train, x_test, y_test, folder_name, prefix
     classify_sub(svm_classifier, 
                  x_train, y_train, 
                  x_test, y_test, 
-                 confusion_matrix_folder + 'cm_svm.csv', 
-                 summary_folder + 'summary_svm.csv',
+                 confusion_matrix_folder + prefix + '_cm_svm.csv', 
+                 summary_folder + prefix + '_summary_svm.csv',
                  'SVM',
                  verbose)
     
@@ -324,7 +328,7 @@ if __name__ == "__main__":
                                                             random_state = 42)
         
         classify(random_state, x_train, y_train, x_test, y_test, 
-                 folder_name, "slice_no_k_fold{}".format(slice_number), args.verbose)
+                 folder_name, "slice_{}_no_cross_validation".format(slice_number), args.verbose)
        
         kfold = StratifiedKFold(n_splits = 5, shuffle = True, random_state = 0)
         
