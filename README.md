@@ -31,7 +31,7 @@ TBU
 
 ```
 Clone this repository
-Download dataset files
-run classification.py
+Download dataset files and extract them in the same directory
+run classification.py --mode [0: packet, 1: unidirectional, 2: bidirectional] --output [output_folder] --verbose [True/False]
 ```
 - The classification outputs are added to the output folder. 
