@@ -16,7 +16,14 @@ year = {2020} }
 ````
 
 ## Citation
-TBU
+```
+@article{hindy2020machine,
+  title={Machine Learning Based IoT Intrusion Detection System: An MQTT Case Study},
+  author={Hindy, Hanan and Bayne, Ethan and Bures, Miroslav and Atkinson, Robert and Tachtatzis, Christos and Bellekens, Xavier},
+  journal={arXiv preprint arXiv:2006.15340},
+  year={2020}
+}
+````
 
 # Algorithms Used 
 - Logistic Regression
