@@ -40,7 +40,7 @@ def load_file(path, mode, is_attack = 1, label = 1, folder_name='Bi/', sliceno =
     
     #attacker_ips = ['192.168.2.5']
     
-    columns_to_drop_packet = ['timestamp', 'src_ip', 'dst_ip', 'ip_flags', 'tcp_flags', 'mqtt_flags']
+    columns_to_drop_packet = ['timestamp', 'src_ip', 'dst_ip']
     columns_to_drop_uni = ['proto', 'ip_src', 'ip_dst']
     columns_to_drop_bi = ['proto', 'ip_src', 'ip_dst']
     
